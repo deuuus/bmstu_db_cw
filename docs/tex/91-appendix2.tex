@@ -1,0 +1,90 @@
+\begin{appendices}
+\chapter{Запросы к базы данных}
+
+На листингах Б.1-Б.2 представлены запросы, реализованные в процессе выполнения курсовой работы. 
+
+\begin{lstlisting}[caption={Запросы к базе данных}]
+INSERT INTO admins (name, surname, email, encrypted_password) 
+VALUES ($1, $2, $3, $4) RETURNING id
+
+SELECT id, name, surname, email, encrypted_password 
+FROM admins WHERE id = $1
+
+SELECT id, name, surname, email, encrypted_password 
+FROM admins WHERE email = $1
+
+SELECT id, name, surname, email, encrypted_password FROM admins
+
+INSERT INTO doctors (name, surname, work_since, spec_id, email, 
+encrypted_password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id
+
+SELECT id, name, surname, work_since, spec_id, email, encrypted_password 
+FROM doctors WHERE id = $1
+
+SELECT id, name, surname, work_since, spec_id, email, encrypted_password 
+FROM doctors WHERE email = $1
+
+SELECT id, name, surname, work_since, spec_id, email, encrypted_password 
+FROM doctors
+
+INSERT INTO patients (name, surname, birth_year, gender, phone, email, 
+encrypted_password) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id
+
+SELECT id, name, surname, birth_year, gender, phone, email, 
+encrypted_password FROM patients WHERE id = $1
+
+SELECT id, name, surname, birth_year, gender, phone, email, 
+encrypted_password FROM patients WHERE email = $1
+
+SELECT id, name, surname, gender, birth_year, phone, email, 
+encrypted_password FROM patients
+
+SELECT disease_id, percent FROM percent($1)
+
+SELECT name, spec_id FROM diseases WHERE id = $1
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[caption={Запросы к базе данных(продолжение)}]
+SELECT id, name, spec_id FROM diseases
+
+SELECT id, name FROM diseases WHERE spec_id = $1
+
+SELECT name, cost FROM medicines WHERE id = $1
+
+SELECT id, name, cost FROM medicines
+
+INSERT INTO records (visit_id, disease_id, medicine_id) 
+VALUES ($1, $2, $3) RETURNING id
+
+SELECT records.id, records.visit_id, records.disease_id, 
+records.medicine_id FROM records JOIN visits ON records.visit_id=visits.id 
+WHERE visits.patient_id = $1
+
+SELECT records.id, records.visit_id, records.disease_id, 
+records.medicine_id FROM records JOIN visits ON records.visit_id=visits.id 
+WHERE visits.doctor_id = $1
+
+SELECT id, name, salary FROM specializations WHERE id = $1
+
+SELECT id, name, salary FROM specializations WHERE name = $1
+
+SELECT id, name, salary FROM specializations
+
+SELECT id, status, patient_id, doctor_id FROM visits WHERE id = $1
+
+INSERT INTO visits (status, patient_id, doctor_id) 
+VALUES ('Active', $1, $2) RETURNING id
+
+SELECT id, patient_id FROM visits WHERE doctor_id=$1 AND status = 'Active'
+
+SELECT id, patient_id FROM visits WHERE doctor_id=$1 AND status = 'Done'
+
+SELECT id, patient_id FROM visits WHERE doctor_id=$1
+
+SELECT id, doctor_id FROM visits WHERE patient_id=$1 AND status = 'Active'
+
+UPDATE visits SET status = 'Done' WHERE id = $1;
+
+\end{lstlisting}
+
+\end{appendices}

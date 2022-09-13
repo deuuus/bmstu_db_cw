@@ -1,0 +1,154 @@
+\begin{appendices}
+\chapter{Сценарий создания базы данных}
+
+На листингах А.1-А.2 представлен сценарий создания базы данных.
+
+\begin{lstlisting}[caption={Сценарий создания базы данных}]
+CREATE TABLE patients (
+  id                 serial    not null primary key,
+  name               varchar   not null,
+  surname            varchar   not null,
+  gender             varchar   not null,
+  birth_year         integer   not null,
+  phone              varchar   not null,
+  email              varchar   not null unique,
+  encrypted_password varchar   not null,
+  check (birth_year between 1922 AND 2022)
+);
+
+CREATE TABLE specializations (
+  id     serial  not null primary key,
+  name   varchar not null,
+  salary integer not null,
+  check (salary > 0)
+);
+
+CREATE TABLE diseases (
+  id      serial not null primary key,
+  name    varchar not null,
+  spec_id integer   references specializations (id)
+);
+
+CREATE TABLE medicines (
+  id   serial  not null primary key,
+  name varchar not null,
+  cost integer not null,
+  check (cost > 0)
+);
+
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[caption={Сценарий создания базы данных(продолжение)}]
+CREATE TABLE doctors (
+  id                 serial    not null   primary key,
+  name               varchar   not null,
+  surname            varchar   not null,
+  work_since         integer   not null,
+  spec_id            integer   references specializations (id),
+  email              varchar   not null unique,
+  encrypted_password varchar   not null,
+  check (work_since between 1942 AND 2022)
+);
+
+CREATE TABLE visits (
+  id          serial  not null primary key,
+  status      varchar not null,
+  patient_id  integer references patients (id),
+  doctor_id   integer references doctors (id),
+  check (status in ('Done', 'Active'))
+);
+
+CREATE TABLE records (
+  id          serial  not null primary key,
+  visit_id    integer references visits (id),
+  disease_id     integer references diseases (id),
+  medicine_id    integer references medicines (id)
+);
+
+CREATE TABLE admins (
+  id                 serial    not null primary key,
+  name               varchar   not null,
+  surname            varchar   not null,
+  email              varchar   not null unique,
+  encrypted_password varchar   not null
+);
+
+CREATE TABLE ops_stat
+(
+  operation char(1) not null,
+  date timestamp not null,
+  user_id text not null
+);
+\end{lstlisting}
+\clearpage
+На листинге А.3 представлен сценарий создания ролей и выделения прав.
+
+\begin{lstlisting}[caption={Создание ролей и выделение прав}]
+create role patient with login password '111';
+grant select, insert on table patients to patient;
+grant select,insert on table visits to patient;
+grant select on table records to patient;
+
+create role doctor with login password '222';
+grant select, insert on table doctors to doctor;
+grant select on table medicines to doctor;
+grant select on table diseases to doctor;
+grant select, update on table visits to doctor;
+grant select, insert on table records to doctor;
+
+create role admin with login password '333';
+grant select, insert on table admins to admin;
+grant select on table patient to admin;
+grant select on table medicines to doctor;
+grant select on table diseases to doctor;
+grant select, insert on table doctors to admin;
+grant select, insert on table records to admin;
+\end{lstlisting}
+
+\clearpage
+На листинге А.4 представлен сценарий создания логирующего триггера.
+
+\begin{lstlisting}[caption={Сценарий создания логирующего триггера}]
+CREATE OR REPLACE FUNCTION logging()
+RETURNS TRIGGER
+AS
+$code$
+	BEGIN
+	IF (TG_OP = 'INSERT') THEN
+		INSERT INTO ops_stat SELECT 'I', now(), user;
+	ELSIF (TG_OP = 'DELETE') THEN
+		INSERT INTO ops_stat SELECT 'S', now(), user;
+	ELSIF (TG_OP = 'UPDATE') THEN
+		INSERT INTO ops_stat SELECT 'S', now(), user;
+	END IF;
+	RETURN NULL;
+	END;
+$code$
+LANGUAGE PLPGSQL;
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON patients
+FOR ROW EXECUTE FUNCTION logging();
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON doctors
+FOR ROW EXECUTE FUNCTION logging();
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON admins
+FOR ROW EXECUTE FUNCTION logging();
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON diseases
+FOR ROW EXECUTE FUNCTION logging();
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON specializations
+FOR ROW EXECUTE FUNCTION logging();
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON medicines
+FOR ROW EXECUTE FUNCTION logging();
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON visits
+FOR ROW EXECUTE FUNCTION logging();
+
+CREATE TRIGGER log AFTER INSERT OR DELETE OR UPDATE ON records
+FOR ROW EXECUTE FUNCTION logging();
+\end{lstlisting}
+
+\end{appendices}

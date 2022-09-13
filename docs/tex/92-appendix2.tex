@@ -1,0 +1,88 @@
+\begin{appendices}
+\chapter{Детали реализации}
+
+На листингах В.1-В.2 представлена функция, настраивающая роутер сервера.
+
+\begin{lstlisting}[caption={Настройка роутера}]
+func (s *server) configureRouter() {
+	s.router.Use(s.setRequestID)
+	s.router.Use(s.logRequest)
+	s.router.Use(handlers.CORS(handlers.AllowedOrigins([]string{"*"})))
+	
+	//general routes
+	s.router.HandleFunc("/start", s.handleStart())
+	s.router.HandleFunc("/login", s.handleLogin())
+	s.router.HandleFunc("/after", s.handleAfter())
+	
+	//patient routes
+	s.router.HandleFunc("/create_patient", s.handlePatientCreate())
+	s.router.HandleFunc("/commit_create", s.handlePatientCommitCreate())
+	
+	//patient private routes
+	patient_root := s.router.PathPrefix("/patient").Subrouter()
+	patient_root.Use(s.authenticatePatient)
+	patient_root.HandleFunc("/main", s.handlePatientMainPage())
+	patient_root.HandleFunc("/cabinet", s.handlePatientCabinet())
+	patient_root.HandleFunc("/create_visit", s.handlePatientCreateVisit())
+	patient_root.HandleFunc("/commit_visit", 
+									s.handlePatientCommitCreateVisit())
+	patient_root.HandleFunc("/record", s.handlePatientRecord())
+	patient_root.HandleFunc("/show_active_visits", 
+									s.handlePatientShowActiveVisits())
+	
+	//doctor private routes
+	doctor_root := s.router.PathPrefix("/doctor").Subrouter()
+	doctor_root.Use(s.authenticateDoctor)
+	doctor_root.HandleFunc("/cabinet", s.handleDoctorCabinet())
+	doctor_root.HandleFunc("/main", s.handleDoctorMainPage())
+	doctor_root.HandleFunc("/show_active_visits", 
+									s.handleDoctorShowActiveVisits())
+	doctor_root.HandleFunc("/show_done_visits", 
+									s.handleDoctorShowDoneVisits())
+	doctor_root.HandleFunc("/commit_visit", s.handleDoctorCommitVisit())
+	doctor_root.HandleFunc("/record", s.handleDoctorRecord())
+	
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[caption={Настройка роутера(продолжение)}]
+    //admin private routes
+	admin_root := s.router.PathPrefix("/admin").Subrouter()
+	admin_root.Use(s.authenticateAdmin)
+
+	admin_root.HandleFunc("/main", s.handleAdminMainPage())
+	admin_root.HandleFunc("/cabinet", s.handleAdminCabinet())
+	admin_root.HandleFunc("/create_doctor", s.handleAdminCreateDoctor())
+	admin_root.HandleFunc("/commit_doctor", 
+									s.handleAdminCommitCreateDoctor())
+	admin_root.HandleFunc("/create_admin", s.handleAdminCreateAdmin())
+	admin_root.HandleFunc("/commit_admin", 
+									s.handleAdminCommitCreateAdmin())
+	admin_root.HandleFunc("/show_doctors", s.handleAdminShowDoctors())
+	admin_root.HandleFunc("/show_patients", s.handleAdminShowPatients())
+	admin_root.HandleFunc("/show_stat", s.handleAdminShowStat())
+	admin_root.HandleFunc("/show_admins", s.handleAdminShowAdmins())
+	admin_root.HandleFunc("/doctor_done_visits", 
+									s.handleAdminShowDoctorDoneVisits())
+	admin_root.HandleFunc("/doctor_cabinet", 
+									s.handleAdminShowDoctorCabinet())
+	
+	//admin general routes
+	s.router.HandleFunc("/admin_start", s.handleAdminStart())
+	s.router.HandleFunc("/admin_pass", s.handleAdminGeneralPass())
+	
+	//admin general private routes
+	admin_general_root:=s.router.PathPrefix("/admin_general").Subrouter()
+	admin_general_root.Use(s.authenticateAdminGeneral)
+	admin_general_root.HandleFunc("/admin_create", 
+									s.handleAdminGeneralCreate())
+	admin_general_root.HandleFunc("/commit_create", 
+									s.handleAdminGeneralCommitCreate())
+	admin_general_root.HandleFunc("/admin_login", 
+									s.handleAdminGeneralLogin())
+	admin_general_root.HandleFunc("/commit_login", 
+									s.handleAdminGeneralCommitLogin())
+}
+\end{lstlisting}
+
+
+\end{appendices}
