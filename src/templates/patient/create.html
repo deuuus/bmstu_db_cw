@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Регистрация</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 42%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 2px;
+                cursor: pointer;
+                width: 300px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="integer"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <br><br><br><br>
+        <center><h3>Регистрация в системе</h3></center>
+        <div class="layer">
+        <form method="POST" action="commit_create">
+            <label>Имя</label><br>
+            <input type="text" name="name"/><br><br>
+            <label>Фамилия</label><br>
+            <input type="text" name="surname"/><br><br>
+            <label>Пол</label><br>
+            <input type="radio" id="contactChoice1" name="gender" value="Женский">
+            <label for="genderChoice1">Женский</label>
+            <input type="radio" id="contactChoice2" name="gender" value="Мужской">
+            <label for="genderChoice2">Мужской</label>
+            <br><br>
+            <label>Год рождения</label><br>
+            <input type="integer" name="birth_year"/><br><br>
+            <label>Номер телефона</label><br>
+            <input type="integer" name="phone"/><br><br>
+            <label>Email</label><br>
+            <input type="text" name="email"/><br><br>
+            <label>Пароль</label><br>
+            <input type="password" name="password"/><br><br>
+            <input type="submit" value="Зарегистрироваться"/>
+        </form>
+        </div>
+        </font>
+    </body>
+</html>

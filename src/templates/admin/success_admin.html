@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Main page</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 38%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 2px;
+                cursor: pointer;
+                width: 300px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <center><h1>Вы успешно зарегистрировали пользователя с ролью "Администратор" в системе.</h1></center>
+        <div class="layer">
+        <form method="POST" action="/admin/main">
+            <input type="submit" value="Вернуться на главную страницу"/>
+        </form>
+        </div>
+        </font>
+    </body>
+</html>

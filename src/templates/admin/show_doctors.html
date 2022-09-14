@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Список докторов</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+             margin-top: 100px;
+            }
+            .layer {
+                margin-left: 16%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 400px;
+                cursor: pointer;
+                width: 450px;
+                height: 60px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+            .tableWrap {
+                height: 600px;
+                width: 1300px;
+                border: 2px solid black;
+                overflow: auto;
+            }
+            thead tr th {
+                position: sticky;
+                top: 0;
+            }
+            table {
+                border-collapse: collapse;
+                font-size: 17px;
+            }
+            th {
+                padding: 16px;
+                padding-left: 15px;
+                border-left: 1px dotted rgba(200, 209, 224, 0.6);
+                border-bottom: 1px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+                text-align: left;
+                box-shadow: 0px 0px 0 2px #e8e8e8;
+            }
+            table {
+                width: 100%;
+                font-family: sans-serif;
+                border: 2px;
+            }
+            table td {
+                padding: 35px;
+            }
+            tbody tr {
+                border-bottom: 2px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+            }
+            table tr:nth-child(even){background-color: #f2f2f2;}
+            table tr:nth-child(odd){background-color: #b5b5b6;}
+            thead {
+                font-weight: 500;
+                color: white;
+            }
+            tbody tr:hover {
+                background: #e6f7ff;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <center><h1>Список докторов, зарегистрированных в системе:</h1></center>
+        <div class="layer">
+        <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Обработанные заявки</th>
+                    <th>Личный кабинет</th>
+                    <th>Год начала практики</th>
+                    <th>Специализация</th>
+                    <th>Зарплата</th>
+                    <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{ range $data := . }}
+                    <tr>
+                        <td>{{$data.Doctor.Name}}</td>
+                        <td>{{$data.Doctor.Surname}}</td>
+                        <td><a href="doctor_done_visits?doctor_id={{.Doctor.ID}}" title="Обработанные заявки">Ссылка</a></td>
+                        <td><a href="doctor_cabinet?doctor_id={{.Doctor.ID}}" title="Личный кабинет">Ссылка</a></td>
+                        <td>{{$data.Doctor.Work_since}}</td>
+                        <td>{{$data.Specialization.Name}}</td>
+                        <td>{{$data.Specialization.Salary}}</td>
+                        <td>{{$data.Doctor.Email}}</td>
+                    </tr>
+                {{end}}
+              </tbody>
+            </table>
+          </div>
+        <br>
+        <form method="POST" action="main">
+            <input type="submit" value="Вернуться на главную страницу"/>
+        </form>
+        </div>
+        </font>
+    </body>
+</html>

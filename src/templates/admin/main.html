@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Главная</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 38%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+                margin-top: 120px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 12px 2px;
+                cursor: pointer;
+                width: 470px;
+                height: 60px;
+                font-size: 22px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 400px;
+                height: 40px;
+                font-weight: bold;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <div class="layer">
+        <form method="POST" action="/admin/cabinet">
+            <input type="submit" value="Личный кабинет"/>
+        </form>
+        <form method="POST" action="/admin/create_doctor">
+            <input type="submit" size="10" value="Зарегистрировать доктора"/>
+        </form>
+        <form method="POST" action="/admin/create_admin">
+            <input type="submit" value="Зарегистрировать администратора"/>
+        </form>
+        <form method="POST" action="/admin/show_doctors">
+            <input type="submit" value="Просмотреть список докторов"/>
+        </form>
+        <form method="POST" action="/admin/show_patients">
+            <input type="submit" value="Просмотреть список пациентов"/>
+        </form>
+        <form method="POST" action="/admin/show_admins">
+            <input type="submit" value="Просмотреть список администраторов"/>
+        </form>
+        <form method="POST" action="/admin/show_stat">
+            <input type="submit" value="Просмотреть статистику"/>
+        </form>
+        <form method="POST" action="/start">
+            <input type="submit" value="Выход"/>
+        </form>
+        </div>
+
+        </font>
+    </body>
+</html>

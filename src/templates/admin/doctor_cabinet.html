@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Main page</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 30%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 2px;
+                cursor: pointer;
+                width: 300px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+            table {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 62%;
+            }
+            table td, table th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+            table tr:nth-child(even){background-color: #f2f2f2;}
+            table tr:nth-child(odd){background-color: #b5b5b6;}
+            table tr:hover {background-color: #ddd;}
+            table th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: rgb(29, 8, 63);
+                color: white;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <center><h1>Личный кабинет</h1></center>
+        <br>
+        <center><h2>Информация о текущем пользователе:</h2></center>
+        <br><br><br>
+        <div class="layer">
+        <table>
+            <tr>
+                <th>Роль</th>
+                <td>Доктор</td>
+            </tr>
+            <tr>
+                <th>Имя</th>
+                <td>{{.Doctor.Name}}</td>
+            </tr>
+            <tr>
+                <th>Фамилия</th>
+                <td>{{.Doctor.Surname}}</td>
+            </tr>
+            <tr>
+                <th>Начало врачебной практики</th>
+                <td>{{.Doctor.Work_since}} г.</td>
+            </tr>
+            <tr>
+                <th>Специализация</th>
+                <td>{{.Specialization.Name}}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{.Doctor.Email}}</td>
+            </tr>
+            </table>
+        <br>
+        <form method="POST" action="/admin/show_doctors">
+            <input type="submit" value="Назад"/>
+        </form>
+        </div>
+        </font>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Главная</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 38%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+                margin-top: 220px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 12px 2px;
+                cursor: pointer;
+                width: 450px;
+                height: 60px;
+                font-size: 22px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 400px;
+                height: 40px;
+                font-weight: bold;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <div class="layer">
+        <form method="POST" action="/patient/cabinet">
+            <input type="submit" value="Личный кабинет"/>
+        </form>
+        <form method="POST" action="/patient/record">
+            <input type="submit" value="Просмотреть медицинскую карту"/>
+        </form>
+        <form method="POST" action="/patient/create_visit">
+            <input type="submit" value="Оставить заявку на прием к врачу"/>
+        </form>
+        <form method="POST" action="/patient/show_active_visits">
+            <input type="submit" value="Просмотреть оставленные заявки"/>
+        </form>
+        <form method="POST" action="/start">
+            <input type="submit" value="Выход"/>
+        </form>
+        </div>
+        </font>
+    </body>
+</html>

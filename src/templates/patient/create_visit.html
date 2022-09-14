@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Main page</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+             margin-top: 90px;
+            }
+            .layer {
+                margin-left: 27%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 300px;
+                cursor: pointer;
+                width: 300px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+            .tableWrap {
+                height: 400px;
+                width: 1000px;
+                border: 2px solid black;
+                overflow: auto;
+                font-size: 18px;
+            }
+            thead tr th {
+                position: sticky;
+                top: 0;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th {
+                padding: 16px;
+                padding-left: 15px;
+                border-left: 1px dotted rgba(200, 209, 224, 0.6);
+                border-bottom: 1px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+                text-align: left;
+                box-shadow: 0px 0px 0 2px #e8e8e8;
+            }
+            table {
+                width: 100%;
+                font-family: sans-serif;
+                border: 2px;
+            }
+            table td {
+                padding: 35px;
+            }
+            tbody tr {
+                border-bottom: 2px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+            }
+            table tr:nth-child(even){background-color: #f2f2f2;}
+            table tr:nth-child(odd){background-color: #b5b5b6;}
+            thead {
+                font-weight: 500;
+                color: white;
+            }
+            tbody tr:hover {
+                background: #e6f7ff;
+            }
+           </style>
+    </head>
+    <body>
+    <div class="layer">
+        <h1>Список доступных врачей:</h1>
+        <div class="tableWrap">
+            <table>
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Год начала практики</th>
+                <th>Специализация</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ range $data := . }}
+                <tr>
+                    <td>{{$data.Doctor.ID}}</td>
+                    <td>{{$data.Doctor.Name}}</td>
+                    <td>{{$data.Doctor.Surname}}</td>
+                    <td>{{$data.Doctor.Work_since}}</td>
+                    <td>{{$data.Specialization.Name}}</td>
+                </tr>
+            {{end}}
+            </tbody>
+            </table>
+        </div>
+        <br>
+        <form method="POST" action="commit_visit">
+            <h2>Выберите номер доктора, подходящего Вам:</h2>
+            <select name = "data" style="width:295px; height:40px; font-size: 20px; border-radius: 5px;">
+                {{range $data := .}}
+                <option value="{{$data.Doctor.ID}}">{{$data.Doctor.ID}}</option>
+                {{end}}
+            </select><br>
+    
+            <br><br>
+            <input type="submit" value="Оставить заявку"/>
+        </form>
+        <form method="POST" action="/patient/main">
+            <input type="submit" value="Вернуться назад"/>
+        </form>
+    </div>
+    </body>
+</html>

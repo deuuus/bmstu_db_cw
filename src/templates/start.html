@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Стартовая страница</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 42%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 2px;
+                cursor: pointer;
+                width: 300px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <br><br><br><br><br><br><br><br><br><br>
+        <center><h2>Вход в систему</h2></center>
+        <div class="layer">
+        <form method="POST" action="login">
+            <label>Email</label><br>
+            <input type="text" name="email"/><br><br>
+            <label>Пароль</label><br>
+            <input type="password" name="password"/><br><br>
+            <input type="submit" value="Авторизоваться"/>
+        </form>
+        <form method="POST" action="create_patient">
+            <input type="submit" value="Зарегистрироваться"/>
+        </form>
+        </div>
+        </font>
+    </body>
+</html>

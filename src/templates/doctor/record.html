@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Main page</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 30%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 2px;
+                cursor: pointer;
+                width: 300px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: 14px;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+            .tableWrap {
+                height: 660px;
+                width: 800px;
+                border: 2px solid black;
+                overflow: auto;
+                font-size: 18px;
+            }
+            thead tr th {
+                position: sticky;
+                top: 0;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th {
+                padding: 16px;
+                padding-left: 15px;
+                border-left: 1px dotted rgba(200, 209, 224, 0.6);
+                border-bottom: 1px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+                text-align: left;
+                box-shadow: 0px 0px 0 2px #e8e8e8;
+            }
+            table {
+                width: 100%;
+                font-family: sans-serif;
+                border: 2px;
+            }
+            table td {
+                padding: 16px;
+            }
+            tbody tr {
+                border-bottom: 2px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+            }
+            table tr:nth-child(even){background-color: #f2f2f2;}
+            table tr:nth-child(odd){background-color: #b5b5b6;}
+            thead {
+                font-weight: 500;
+                color: white;
+            }
+            tbody tr:hover {
+                background: #e6f7ff;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <center><h2>Медицинская карта пациента:</h2></center>
+        <br><br>
+        <div class="layer">
+        <div class="tableWrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>№ заявки</th>
+                    <th>Доктор</th>
+                    <th>Специализация</th>
+                    <th>Диагноз</th>
+                    <th>Препарат</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {{ range $data := .}}
+                    <tr>
+                        <td>{{.Visit.ID}}</td>
+                        <td>{{.Doctor.Name}} {{.Doctor.Surname}}</td>
+                        <td>{{.Specialization.Name}}</td>
+                        <td>{{.Disease.Name}}</td>
+                        <td>{{.Medicine.Name}}</td>
+                    </tr>
+                {{end}}
+                </tbody>
+            </table>
+            <br>
+        </div>
+        </div>
+        </font>
+    </body>
+</html>

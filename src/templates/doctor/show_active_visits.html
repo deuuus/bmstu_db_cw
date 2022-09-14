@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Main page</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 24%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 300px;
+                cursor: pointer;
+                width: 330px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+            .tableWrap {
+                height: 250px;
+                width: 1100px;
+                border: 2px solid black;
+                overflow: auto;
+                font-size: 18px;
+            }
+            thead tr th {
+                position: sticky;
+                top: 0;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th {
+                padding: 16px;
+                padding-left: 15px;
+                border-left: 1px dotted rgba(200, 209, 224, 0.6);
+                border-bottom: 1px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+                text-align: left;
+                box-shadow: 0px 0px 0 2px #e8e8e8;
+            }
+            table {
+                width: 100%;
+                font-family: sans-serif;
+                border: 2px;
+            }
+            table td {
+                padding: 25px;
+            }
+            tbody tr {
+                border-bottom: 2px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+            }
+            table tr:nth-child(even){background-color: #f2f2f2;}
+            table tr:nth-child(odd){background-color: #b5b5b6;}
+            thead {
+                font-weight: 500;
+                color: white;
+            }
+            tbody tr:hover {
+                background: #e6f7ff;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <div class="layer">
+        
+        <form method="POST" action="commit_visit">
+            <h3 style="margin-left: 23%;">Список активных заявок:</h3>
+            <div class="tableWrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>№ заявки</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Мед. карта</th>
+                        <th>Пол</th>
+                        <th>Год рождения</th>
+                        <th>Телефон</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ range $data := .VPs}}
+                        <tr>
+                            <td>{{.Visit.ID}}</td>
+                            <td>{{.Patient.Name}}</td>
+                            <td>{{.Patient.Surname}}</td>
+                            <td><a href="record?patient_id={{.Patient.ID}}" title="Карта">Ссылка</a></td>
+                            <td>{{.Patient.Gender}}</td>
+                            <td>{{.Patient.Birth_year}}</td>
+                            <td>{{.Patient.Phone}}</td>
+                        </tr>
+                    {{end}}
+                    </tbody>
+                </table>
+                </div>
+            <br>
+            
+            <h3 style="margin-left: 9%;">Выберите номер заявки, которую Вы хотите зафиксировать:</h3>
+            <select name="visit_id" style="width:295px; height:40px;margin-left:22%; border-radius: 5px;">
+                {{ range $data := .VPs}}
+                <option value={{.Visit.ID}}>{{.Visit.ID}}</option>
+                {{end}}
+            </select><br>
+
+            <h3 style="margin-left: 24%;">Выберите диагноз:</h3>
+            <select name="disease_id" style="width:295px; margin-left:22%; height:40px; border-radius: 5px;">
+                {{ range $data := .Diseases}}
+                <option value={{.ID}}>{{.Name}}</option>
+                {{end}}
+            </select><br>
+
+            <h3 style="margin-left: 24%;">Выберите препарат:</h3>
+            <select name="medicine_id" style="width:295px; height:40px;margin-left:22%; border-radius: 5px;">
+                {{ range $data := .Medicines}}
+                <option value={{.ID}}>{{.Name}}</option>
+                {{end}}
+            </select><br>
+
+            <br>
+            <input type="submit" value="Зафиксировать заявку"/>
+        </form>
+        <form method="POST" action="/doctor/main">
+            <input type="submit" value="Вернуться назад"/>
+        </form>
+        </div>
+        </font>
+    </body>
+</html>

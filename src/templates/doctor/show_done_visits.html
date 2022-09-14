@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Main page</title>
+        <style>
+            body {
+             background: rgb(230, 228, 228);
+             color: rgb(10, 10, 10);
+            }
+            .layer {
+                margin-left: 18%;
+                background-color: rgb(230, 228, 228);
+                padding: 10px;
+            }
+            input[type=submit] {
+                background-color: rgb(29, 8, 63);
+                border: none;
+                border-radius: 10px;
+                color: rgb(255, 255, 255);
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 6px 300px;
+                cursor: pointer;
+                width: 350px;
+                height: 60px;
+                font-size: 16px;
+                font-weight: bold;
+                margin-left: 26%;
+            }
+            input[type="text"], input[type="password"] {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                margin: 0;
+                border-radius: 5px;
+                width: 300px;
+                height: 30px;
+                font-weight: bold;
+            }
+            .tableWrap {
+                height: 465px;
+                width: 1200px;
+                border: 2px solid black;
+                overflow: auto;
+                font-size: 18px;
+            }
+            thead tr th {
+                position: sticky;
+                top: 0;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            th {
+                padding: 16px;
+                padding-left: 15px;
+                border-left: 1px dotted rgba(200, 209, 224, 0.6);
+                border-bottom: 1px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+                text-align: left;
+                box-shadow: 0px 0px 0 2px #e8e8e8;
+            }
+            table {
+                width: 100%;
+                font-family: sans-serif;
+                border: 2px;
+            }
+            table td {
+                padding: 35px;
+            }
+            tbody tr {
+                border-bottom: 2px solid #e8e8e8;
+                background: rgb(29, 8, 63);
+            }
+            table tr:nth-child(even){background-color: #f2f2f2;}
+            table tr:nth-child(odd){background-color: #b5b5b6;}
+            thead {
+                font-weight: 500;
+                color: white;
+            }
+            tbody tr:hover {
+                background: #e6f7ff;
+            }
+           </style>
+    </head>
+    <body>
+        <font size="5" face="monospace">
+        <div class="layer">
+        <br><br>
+
+        <h1>Список обработанных заявок:</h1>
+        <form method="POST" action="/doctor/main">
+            <div class="tableWrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>№ заявки</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Пол</th>
+                        <th>Год рождения</th>
+                        <th>Телефон</th>
+                        <th>Диагноз</th>
+                        <th>Препарат</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ range $data := . }}
+                        <tr>
+                            <td>{{$data.Visit.ID}}</td>
+                            <td>{{$data.Patient.Name}}</td>
+                            <td>{{$data.Patient.Surname}}</td>
+                            <td>{{$data.Patient.Gender}}</td>
+                            <td>{{$data.Patient.Birth_year}}</td>
+                            <td>{{$data.Patient.Phone}}</td>
+                            <td>{{$data.Disease.Name}}</td>
+                            <td>{{$data.Medicine.Name}}</td>
+                        </tr>
+                    {{end}}
+                    </tbody>
+                </table>
+                </div>
+            <br>
+
+            <br><br>
+            <input type="submit" value="Вернуться на главную"/>
+        </form>
+
+        </div>
+        </font>
+    </body>
+</html>
